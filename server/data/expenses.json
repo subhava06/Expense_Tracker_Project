@@ -6,5 +6,21 @@
     "date": "2026-06-06",
     "note": "Lunch",
     "createdAt": "2026-06-06T13:01:29.676Z"
+  },
+  {
+    "id": "96399b35-f570-4ca1-b641-5095e8830a10",
+    "amount": 360,
+    "category": "Bills",
+    "date": "2026-06-06",
+    "note": "Mobile recharge",
+    "createdAt": "2026-06-06T14:32:14.708Z"
+  },
+  {
+    "id": "e575a677-d5b6-491a-a21b-23a0e86bbf57",
+    "amount": 1000,
+    "category": "Entertainment",
+    "date": "2026-06-06",
+    "note": "Movie",
+    "createdAt": "2026-06-06T14:32:30.110Z"
   }
 ]

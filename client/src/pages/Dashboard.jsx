@@ -4,6 +4,7 @@ import API from "../api/expenseApi";
 import ExpenseForm from "../components/ExpenseForm";
 import ExpenseList from "../components/ExpenseList";
 import SummaryCards from "../components/SummaryCards";
+import ExpenseChart from "../components/ExpenseChart";
 
 const Dashboard = () => {
 
@@ -54,6 +55,16 @@ const Dashboard = () => {
       <SummaryCards
         summary={summary}
      />
+       <SummaryCards
+  summary={summary}
+/>
+
+<ExpenseChart
+  categoryTotals={
+    summary?.categoryTotals
+  }
+/>
+
 
       <ExpenseForm
         fetchExpenses={fetchExpenses}
