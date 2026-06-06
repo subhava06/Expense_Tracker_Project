@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../api/expenseApi";
+import ExpenseForm from "../components/ExpenseForm";
 
 const Dashboard = () => {
 
@@ -21,6 +22,8 @@ const Dashboard = () => {
   return (
     <div style={{padding:"30px"}}>
       <h1>Mini Expense Tracker</h1>
+
+      <ExpenseForm fetchExpenses={fetchExpenses} />
 
       <h3 style={{marginTop:"20px"}}>
         Total Expenses: {expenses.length}
