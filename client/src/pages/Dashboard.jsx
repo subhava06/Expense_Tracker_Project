@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import API from "../api/expenseApi";
+
 import ExpenseForm from "../components/ExpenseForm";
+import ExpenseList from "../components/ExpenseList";
 
 const Dashboard = () => {
 
   const [expenses, setExpenses] = useState([]);
+  const [editingExpense, setEditingExpense] =
+    useState(null);
 
   const fetchExpenses = async () => {
     try {
@@ -20,34 +24,32 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div style={{padding:"30px"}}>
+    <div
+      style={{
+        padding: "30px"
+      }}
+    >
       <h1>Mini Expense Tracker</h1>
 
-      <ExpenseForm fetchExpenses={fetchExpenses} />
+      <ExpenseForm
+        fetchExpenses={fetchExpenses}
+        editingExpense={editingExpense}
+        setEditingExpense={setEditingExpense}
+      />
 
-      <h3 style={{marginTop:"20px"}}>
+      <h3
+        style={{
+          marginTop: "20px"
+        }}
+      >
         Total Expenses: {expenses.length}
       </h3>
 
-      {expenses.map(expense => (
-        <div
-          key={expense.id}
-          style={{
-            background:"white",
-            padding:"10px",
-            marginTop:"10px",
-            borderRadius:"10px"
-          }}
-        >
-          <h4>{expense.category}</h4>
-
-          <p>₹ {expense.amount}</p>
-
-          <p>{expense.note}</p>
-
-          <p>{expense.date}</p>
-        </div>
-      ))}
+      <ExpenseList
+        expenses={expenses}
+        fetchExpenses={fetchExpenses}
+        setEditingExpense={setEditingExpense}
+      />
     </div>
   );
 };

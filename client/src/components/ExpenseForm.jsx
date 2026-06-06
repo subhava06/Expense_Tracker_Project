@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import API from "../api/expenseApi";
+
+
 
 const categories = [
   "Food",
@@ -9,7 +11,11 @@ const categories = [
   "Other"
 ];
 
-const ExpenseForm = ({ fetchExpenses }) => {
+const ExpenseForm = ({
+  fetchExpenses,
+  editingExpense,
+  setEditingExpense
+}) => {
   const [formData, setFormData] = useState({
     amount: "",
     category: "",
@@ -23,6 +29,14 @@ const ExpenseForm = ({ fetchExpenses }) => {
       [e.target.name]: e.target.value
     });
   };
+
+  useEffect(() => {
+
+  if (editingExpense) {
+    setFormData(editingExpense);
+  }
+
+}, [editingExpense]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,20 +60,45 @@ const ExpenseForm = ({ fetchExpenses }) => {
     }
 
     try {
-      await API.post("/", formData);
 
-      setFormData({
-        amount: "",
-        category: "",
-        date: "",
-        note: ""
-      });
+  if (editingExpense) {
 
-      fetchExpenses();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    await API.put(
+      `/${editingExpense.id}`,
+      {
+        amount: Number(formData.amount),
+        category: formData.category,
+        date: formData.date,
+        note: formData.note
+      }
+    );
+
+    setEditingExpense(null);
+
+  } else {
+
+    await API.post("/", {
+      amount: Number(formData.amount),
+      category: formData.category,
+      date: formData.date,
+      note: formData.note
+    });
+
+  }
+
+  setFormData({
+    amount: "",
+    category: "",
+    date: "",
+    note: ""
+  });
+
+  fetchExpenses();
+
+} catch (error) {
+  console.log(error);
+  }
+};
 
   return (
     <form
@@ -71,7 +110,11 @@ const ExpenseForm = ({ fetchExpenses }) => {
         marginBottom: "20px"
       }}
     >
-      <h2>Add Expense</h2>
+      <h2>
+  {editingExpense
+    ? "Edit Expense"
+    : "Add Expense"}
+</h2>
 
       <input
         type="number"
@@ -123,8 +166,10 @@ const ExpenseForm = ({ fetchExpenses }) => {
       <br /><br />
 
       <button type="submit">
-        Add Expense
-      </button>
+  {editingExpense
+    ? "Update Expense"
+    : "Add Expense"}
+</button>
     </form>
   );
 };
