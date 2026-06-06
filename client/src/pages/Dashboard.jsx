@@ -5,6 +5,7 @@ import ExpenseForm from "../components/ExpenseForm";
 import ExpenseList from "../components/ExpenseList";
 import SummaryCards from "../components/SummaryCards";
 import ExpenseChart from "../components/ExpenseChart";
+import FilterBar from "../components/FilterBar";
 
 const Dashboard = () => {
 
@@ -13,10 +14,15 @@ const Dashboard = () => {
     useState(null);
   const [summary, setSummary] =
   useState(null);
+  const [categoryFilter,
+setCategoryFilter] =
+useState("All");
 
   const fetchExpenses = async () => {
     try {
-      const res = await API.get("/");
+      const res = await API.get(
+  `/?category=${categoryFilter}`
+);
       setExpenses(res.data);
       fetchSummary();
     } catch (error) {
@@ -40,7 +46,8 @@ const Dashboard = () => {
   useEffect(() => {
     fetchExpenses();
     fetchSummary();
-  }, []);
+
+  }, [categoryFilter]);
 
   
 
@@ -62,6 +69,15 @@ const Dashboard = () => {
 <ExpenseChart
   categoryTotals={
     summary?.categoryTotals
+  }
+/>
+
+<FilterBar
+  categoryFilter={
+    categoryFilter
+  }
+  setCategoryFilter={
+    setCategoryFilter
   }
 />
 
