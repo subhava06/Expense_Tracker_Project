@@ -3,25 +3,45 @@ import API from "../api/expenseApi";
 
 import ExpenseForm from "../components/ExpenseForm";
 import ExpenseList from "../components/ExpenseList";
+import SummaryCards from "../components/SummaryCards";
 
 const Dashboard = () => {
 
   const [expenses, setExpenses] = useState([]);
   const [editingExpense, setEditingExpense] =
     useState(null);
+  const [summary, setSummary] =
+  useState(null);
 
   const fetchExpenses = async () => {
     try {
       const res = await API.get("/");
       setExpenses(res.data);
+      fetchSummary();
     } catch (error) {
       console.log(error);
     }
   };
+  const fetchSummary = async () => {
+  try {
+
+    const res = await API.get(
+      "/summary"
+    );
+
+    setSummary(res.data);
+
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   useEffect(() => {
     fetchExpenses();
+    fetchSummary();
   }, []);
+
+  
 
   return (
     <div
@@ -30,6 +50,10 @@ const Dashboard = () => {
       }}
     >
       <h1>Mini Expense Tracker</h1>
+
+      <SummaryCards
+        summary={summary}
+     />
 
       <ExpenseForm
         fetchExpenses={fetchExpenses}
