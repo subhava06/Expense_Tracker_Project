@@ -25,7 +25,8 @@ const ExpenseList = ({
   return (
     <div
       style={{
-        background: "white",
+        background: "#fff",
+boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
         padding: "20px",
         borderRadius: "10px",
         marginTop: "20px"

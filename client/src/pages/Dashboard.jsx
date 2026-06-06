@@ -109,12 +109,21 @@ const fetchSummary = async () => {
   
 
   return (
-    <div
-      style={{
-        padding: "30px"
-      }}
-    >
-      <h1>Mini Expense Tracker</h1>
+   <div
+  style={{
+    maxWidth: "1200px",
+    margin: "0 auto",
+    padding: "30px"
+  }}
+>
+      <h1
+  style={{
+    marginBottom: "20px",
+    color: "#111827"
+  }}
+>
+  Expense Tracker Dashboard
+</h1>
 
        <SummaryCards
   summary={summary}

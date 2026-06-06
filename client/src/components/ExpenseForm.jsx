@@ -104,7 +104,8 @@ const ExpenseForm = ({
     <form
       onSubmit={handleSubmit}
       style={{
-        background: "white",
+        background: "#ffffff",
+        boxShadow: "0 2px 10px rgba(0,0,0,0.8)",
         padding: "20px",
         borderRadius: "10px",
         marginBottom: "20px"
