@@ -1,3 +1,5 @@
+const { Parser } = require("json2csv");
+
 const { v4: uuidv4 } = require("uuid");
 const {
   readExpenses,
@@ -151,10 +153,40 @@ const getSummary = (req, res) => {
   });
 };
 
+const exportCSV = (req, res) => {
+
+  const expenses = readExpenses();
+
+  const fields = [
+    "amount",
+    "category",
+    "date",
+    "note"
+  ];
+
+  const parser = new Parser({
+    fields
+  });
+
+  const csv = parser.parse(expenses);
+
+  res.header(
+    "Content-Type",
+    "text/csv"
+  );
+
+  res.attachment(
+    "expenses.csv"
+  );
+
+  return res.send(csv);
+};
+
 module.exports = {
   getExpenses,
   addExpense,
   updateExpense,
   deleteExpense,
   getSummary,
+  exportCSV,
 };

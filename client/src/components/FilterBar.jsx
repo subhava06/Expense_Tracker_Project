@@ -1,9 +1,46 @@
+import API from "../api/expenseApi";
+
 const FilterBar = ({
   categoryFilter,
   setCategoryFilter,
   dateFilter,
   setDateFilter
 }) => {
+
+    const handleExport = async () => {
+  try {
+    const response = await API.get(
+      "/export/csv",
+      {
+        responseType: "blob"
+      }
+    );
+
+    const url =
+      window.URL.createObjectURL(
+        new Blob([response.data])
+      );
+
+    const link =
+      document.createElement("a");
+
+    link.href = url;
+
+    link.setAttribute(
+      "download",
+      "expenses.csv"
+    );
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   return (
     <div
@@ -69,6 +106,14 @@ const FilterBar = ({
     Last Month
   </option>
 </select>
+
+<br /><br />
+
+<button
+  onClick={handleExport}
+>
+  Export CSV
+</button>
     </div>
     
   );

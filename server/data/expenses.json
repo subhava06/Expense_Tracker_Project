@@ -22,5 +22,21 @@
     "date": "2026-06-06",
     "note": "Movie",
     "createdAt": "2026-06-06T14:32:30.110Z"
+  },
+  {
+    "id": "8614ffc2-4fac-4049-9b65-cdbfe348ceeb",
+    "amount": 180,
+    "category": "Food",
+    "date": "",
+    "note": "Waffle",
+    "createdAt": "2026-06-06T14:48:11.273Z"
+  },
+  {
+    "id": "c0627acc-ecd6-4f7b-ab04-0eca751e40b4",
+    "amount": 2500,
+    "category": "Other",
+    "date": "",
+    "note": "Car repair",
+    "createdAt": "2026-06-06T14:48:27.315Z"
   }
 ]
