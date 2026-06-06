@@ -1,6 +1,8 @@
 const FilterBar = ({
   categoryFilter,
-  setCategoryFilter
+  setCategoryFilter,
+  dateFilter,
+  setDateFilter
 }) => {
 
   return (
@@ -46,7 +48,29 @@ const FilterBar = ({
           Other
         </option>
       </select>
+
+      <br /><br />
+
+<select
+  value={dateFilter}
+  onChange={(e) =>
+    setDateFilter(e.target.value)
+  }
+>
+  <option value="all">
+    All Time
+  </option>
+
+  <option value="thisMonth">
+    This Month
+  </option>
+
+  <option value="lastMonth">
+    Last Month
+  </option>
+</select>
     </div>
+    
   );
 };
 

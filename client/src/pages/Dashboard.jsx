@@ -17,24 +17,78 @@ const Dashboard = () => {
   const [categoryFilter,
 setCategoryFilter] =
 useState("All");
+const [dateFilter,
+setDateFilter] =
+useState("all");
 
-  const fetchExpenses = async () => {
-    try {
-      const res = await API.get(
-  `/?category=${categoryFilter}`
-);
-      setExpenses(res.data);
-      fetchSummary();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const fetchSummary = async () => {
+const fetchExpenses = async () => {
   try {
 
-    const res = await API.get(
-      "/summary"
-    );
+    let query =
+      `/?category=${categoryFilter}`;
+
+    const today = new Date();
+
+    if (dateFilter === "thisMonth") {
+
+      const startDate =
+        new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          1
+        )
+          .toISOString()
+          .split("T")[0];
+
+      query +=
+        `&startDate=${startDate}`;
+
+    }
+
+    if (dateFilter === "lastMonth") {
+
+      const firstDayLastMonth =
+        new Date(
+          today.getFullYear(),
+          today.getMonth() - 1,
+          1
+        );
+
+      const lastDayLastMonth =
+        new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          0
+        );
+
+      query +=
+        `&startDate=${
+          firstDayLastMonth
+            .toISOString()
+            .split("T")[0]
+        }`;
+
+      query +=
+        `&endDate=${
+          lastDayLastMonth
+            .toISOString()
+            .split("T")[0]
+        }`;
+
+    }
+
+    const res =
+      await API.get(query);
+
+    setExpenses(res.data);
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+const fetchSummary = async () => {
+  try {
+    const res = await API.get("/summary");
 
     setSummary(res.data);
 
@@ -47,7 +101,10 @@ useState("All");
     fetchExpenses();
     fetchSummary();
 
-  }, [categoryFilter]);
+  }, [
+    categoryFilter,
+     dateFilter
+    ]);
 
   
 
@@ -59,9 +116,6 @@ useState("All");
     >
       <h1>Mini Expense Tracker</h1>
 
-      <SummaryCards
-        summary={summary}
-     />
        <SummaryCards
   summary={summary}
 />
@@ -73,12 +127,10 @@ useState("All");
 />
 
 <FilterBar
-  categoryFilter={
-    categoryFilter
-  }
-  setCategoryFilter={
-    setCategoryFilter
-  }
+  categoryFilter={categoryFilter}
+  setCategoryFilter={setCategoryFilter}
+  dateFilter={dateFilter}
+  setDateFilter={setDateFilter}
 />
 
 
